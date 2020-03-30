@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Opcao } from 'src/app/models/opcao';
 import { InputTexto } from 'src/app/models/input-text';
+import { UsuarioService } from 'src/app/services/usuario.service';
+import { EstatisticasService } from 'src/app/services/estatisticas.service';
 
 @Component({
   selector: 'app-main',
@@ -17,7 +19,10 @@ export class Chat  {
   opcoes: Opcao[] = [];
   debug = false;
   //Usuario
+  delay = 0;
   nomeUsuario = null;
+
+  constructor(protected usuarioService: UsuarioService, public estatService:EstatisticasService) {}
 
   /** Adiciona uma fala da aplicação */
   protected async adicionarFala(fala: string, autor: string  = 'ROBO', robo:boolean = true) {
@@ -28,7 +33,7 @@ export class Chat  {
     const index = this.mensagens.length-1;
     for (var i = 0; i < fala.length; i++) {
       this.mensagens[index].fala += fala.charAt(i);
-      await new Promise(resolve => setTimeout(() => resolve(), 50))
+      await new Promise(resolve => setTimeout(() => resolve(), this.delay))
     }
     
     //Remove mensagens antigas
