@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>main</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div id="main">
+    <div *ngFor="let msg of mensagens" [ngClass]="{'robo-msg': msg.robo, 'voce-msg':!msg.robo}">
+      <p><b>{{msg.autor}}:</b> {{msg.fala}}</p>
+    </div>
+    
+    <div id="input-texto" *ngIf="interacao.ativa && interacao.tipo == 'texto'" >
+      <ion-item>
+        <ion-textarea placeholder="Sua resposta" autoGrow [(ngModel)]="input.texto"></ion-textarea>
+        <ion-button (click)="input.funcao()" fill="clear" [disabled]="!input.texto">
+          <ion-icon slot="start" name="send" size="large"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </div>
+
+    <div id="input-opcoes" *ngIf="interacao.ativa && interacao.tipo == 'opcoes' || debug" >
+      <ion-button *ngFor="let opc of opcoes" (click)="opc.funcao()" color="danger" expand="block"  shape="round">
+        {{opc.texto}}
+      </ion-button>
+    </div>
+  </div>
+
+</ion-content>
