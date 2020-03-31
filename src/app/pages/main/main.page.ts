@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Opcao } from 'src/app/models/opcao';
 import { BotFaces } from 'src/app/models/bot-faces';
-import { LocaisApoioModulo } from './modulos/locais-apoio';
+import { Covid19Modulo } from './modulos/covid19';
 
 @Component({
   selector: 'app-main',
   templateUrl: './main.page.html',
   styleUrls: ['./main.page.scss'],
 })
-export class MainPage extends LocaisApoioModulo implements OnInit {
+export class MainPage extends Covid19Modulo implements OnInit {
+
+  readonly VERSAO = '1.0.0';
 
   async ngOnInit() {
     this.nomeUsuario = await this.usuarioService.getUsuario();
@@ -18,11 +20,11 @@ export class MainPage extends LocaisApoioModulo implements OnInit {
     } else {
       await this.adicionarFala(`Olá ${this.nomeUsuario}! Fico feliz que tenha voltado.`, BotFaces.FELIZ);
       this.interagir('opcoes', [
-        new Opcao(`Não sou ${this.nomeUsuario}`, () => this.alterarNome()),
         new Opcao(`Gostaria de algumas informações`, async () => {
           await this.adicionarFala('Gostaria de algumas informações', null, 'Você', false)
           this.oQueGostariaSaber()
         }),
+        new Opcao(`Não sou ${this.nomeUsuario}`, () => this.alterarNome()),
       ]);
       //this.oQueGostariaSaber();
     }
@@ -49,18 +51,26 @@ export class MainPage extends LocaisApoioModulo implements OnInit {
   }
 
   /** Pergunta Principal do que o usuário deseja fazer */
-  async oQueGostariaSaber() {
+  async oQueGostariaSaber(face = BotFaces.NORMAL) {
     await this.adicionarFala(`O que você gostaria de saber agora?`);
     this.interagir('opcoes', [
-      new Opcao('O que é COVID-19?', () => this.recursoAindaNaoDisponivel()),
+      new Opcao('O que é COVID-19?', () => this.oQueECovid19()),
       new Opcao('Sintomas', () => this.recursoAindaNaoDisponivel()),
       new Opcao('Estatistica', () => this.estatistica()),
       new Opcao('Locais de apoio', () => this.locaisApoio()),
-    ])
+      new Opcao('Quem é você?', () => this.creditos()),
+    ], face)
   }
 
   async recursoAindaNaoDisponivel() {
     await this.adicionarFala('Ooops! Ainda não estou com essa função', BotFaces.TRISTE);
     this.oQueGostariaSaber();
   }
+
+  async creditos() {
+    await this.adicionarFala('Fale-me um pouco sobre você!', null, 'Você', false);
+    await this.adicionarFala(`Oh, fico feliz que você queira saber sobre mim! Bom, eu sou o Bot-Covid-Camsec-01 e estou na versão ${this.VERSAO}. Fui criado por Carlos do Núcleo de Robótica e IA do CESMAC em parceria com curso de Medicina e Mestrado Profissional de Pesquisa em Saúde. A minha produção teve o apoio da Drª. Mylana Gama`, BotFaces.FELIZ);
+    await this.adicionarFala('A composição da minha base de dados estatistíca é retirada de api-sports.io e minha aparência de getavataaars.com', BotFaces.FELIZ);
+    this.oQueGostariaSaber(BotFaces.FELIZ);
+  } 
 }

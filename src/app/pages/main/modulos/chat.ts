@@ -21,7 +21,7 @@ export abstract class Chat  {
   opcoes: Opcao[] = [];
   debug = false;
   //Usuario
-  delay = 10;
+  delay = 20;
   nomeUsuario = null;
 
   constructor(protected usuarioService: UsuarioService, public estatService:EstatisticasService) {}

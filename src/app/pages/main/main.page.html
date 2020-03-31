@@ -21,7 +21,7 @@
     </div>
 
     <div id="input-opcoes" *ngIf="interacao.ativa && interacao.tipo == 'opcoes' || debug" >
-      <ion-button *ngFor="let opc of opcoes" (click)="opc.funcao()" color="danger" expand="block"  shape="round">
+      <ion-button *ngFor="let opc of opcoes" (click)="opc.funcao()" color="danger" expand="block"  shape="round" size="small">
         {{opc.texto}}
       </ion-button>
     </div>

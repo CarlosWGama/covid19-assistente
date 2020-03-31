@@ -8,9 +8,9 @@ export abstract class LocaisApoioModulo extends EstatisticaModulo {
   //================================= ESTATISTICAS
   async locaisApoio() {
       await this.adicionarFala('Gostaria de saber sobre locais de apoio', null, 'Você', false);
-      await this.adicionarFala('Caso você possua alguns sintomas do COVID-19, o ideal é que fique isolado em casa e não precisa se preocupar muito', BotFaces.TRANQUILO);
+      await this.adicionarFala(`Então ${this.nomeUsuario}, caso possua alguns sintomas do COVID-19, o ideal é que fique isolado em casa e não precisa se preocupar muito`, BotFaces.TRANQUILO);
       await this.adicionarFala('O processo de quarentena é ideal para você não contrair ou até mesmo passar vírus para outras pessoas, que podem ser mais sensíveis', BotFaces.TRANQUILO);
-      await this.adicionarFala('Mas caso esteja com falta de ar e passando muito mal, você pode procurar apoio em algum hospital ou clínica para fazer o teste do COVID-19', BotFaces.SERIO);
+      await this.adicionarFala('Mas caso esteja com falta de ar e passando muito mal, você deve procurar apoio em algum hospital ou clínica para fazer o teste do COVID-19', BotFaces.SERIO);
       this.getLocaisApoio()
   }
 

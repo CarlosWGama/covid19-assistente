@@ -17,7 +17,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    overflow: hidden;
+    overflow: auto;
     height: calc(100% - 210px);
 }
 
@@ -27,7 +27,7 @@
     padding: 5px 10px;
     text-align: justify;
     margin-top: 5px;
-    p { margin: 0px;}
+    p { margin: 0px; font-size:14px}
 }
 
 .voce-msg {
@@ -36,7 +36,7 @@
     padding: 5px 10px;
     text-align: justify;
     margin-top: 5px;
-    p { margin: 0px;}
+    p { margin: 0px;font-size:14px}
 }
 
 

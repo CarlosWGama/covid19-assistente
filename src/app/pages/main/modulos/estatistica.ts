@@ -20,10 +20,13 @@ export abstract class EstatisticaModulo extends Chat {
       this.interagir('opcoes', [
         new Opcao('De um país', () => this.perguntarPaisEstatistica()),
         new Opcao('De uma semana atrás', () => this.estatisticaSemanaPassada('All')),
-        new Opcao('Não', () => this.oQueGostariaSaber())
+        new Opcao('Não', async () => {
+          await this.adicionarFala('Não', null, 'Você', false)
+          this.oQueGostariaSaber()
+        })
       ])
     } catch (erro) {
-      await this.adicionarFala(`Ops! Parece que minha rede de informações não está disponível no momento!`, BotFaces.ESPANTADO)
+      await this.adicionarFala(`Ops! Desculpe, ${this.nomeUsuario}, parece que minha rede de informações não está disponível no momento!`, BotFaces.ESPANTADO)
       this.oQueGostariaSaber();
     }
   }
@@ -44,39 +47,44 @@ export abstract class EstatisticaModulo extends Chat {
     await this.adicionarFala(pais, null, 'Você', false);
     await this.adicionarFala(`Aguarde um pouco, estou buscando as informações`, BotFaces.PENSANDO);
 
-    const encontrouPais = this.estatService.buscarPais(pais);
+    try {
+      const encontrouPais = this.estatService.buscarPais(pais);
 
-    //O país buscado existe
-    if (encontrouPais.achou) {
-      const dados = await this.estatService.buscarEstatisticaPais(pais);
-      if (dados) //Encontrou dados do país
-        await this.adicionarFala(`Em ${pais}, no último dado coletado (${this.fData(dados.ultima_atualizacao)}), temos ${dados.confirmados} (${dados.confirmadosNovos}) confirmados, ${dados.recuperados} recuperados e ${dados.mortes} (${dados.mortesNovas}) mortes`)
-      else
-        await this.adicionarFala(`Não encontrei dados de ${pais}`, BotFaces.TRISTE)
-    
-      await this.adicionarFala(`Deseja saber mais dados estatísticos?`)
-      this.interagir('opcoes', [
-        new Opcao('De um país', () => this.perguntarPaisEstatistica()),
-        new Opcao('De uma semana atrás', () => this.estatisticaSemanaPassada(pais)),
-        
-      ])
-    } else {
-      //O pais buscado não existe
-      await this.adicionarFala(`Não encontrei o país ${pais}.`, BotFaces.TRISTE)
-
-      //Mas existe pais com nome similar  
-      if (encontrouPais.similares.length > 0) {
-        await this.adicionarFala(`Talvez você esteja querendo dizer`, BotFaces.PENSANDO)
-
-        const opcoes = encontrouPais.similares.map(p => {
-          return new Opcao(p, () => this.buscarEstatisticaPais(p))
-        })
-        opcoes.push(new Opcao('Nenhum desses', () => this.oQueGostariaSaber()))
-
-        this.interagir('opcoes', opcoes, BotFaces.PENSANDO)
+      //O país buscado existe
+      if (encontrouPais.achou) {
+        const dados = await this.estatService.buscarEstatisticaPais(pais);
+        if (dados) //Encontrou dados do país
+          await this.adicionarFala(`Em ${pais}, no último dado coletado (${this.fData(dados.ultima_atualizacao)}), temos ${dados.confirmados} (${dados.confirmadosNovos}) confirmados, ${dados.recuperados} recuperados e ${dados.mortes} (${dados.mortesNovas}) mortes`)
+        else
+          await this.adicionarFala(`Não encontrei dados de ${pais}`, BotFaces.TRISTE)
+      
+        await this.adicionarFala(`Deseja saber mais dados estatísticos?`)
+        this.interagir('opcoes', [
+          new Opcao('De um país', () => this.perguntarPaisEstatistica()),
+          new Opcao('De uma semana atrás', () => this.estatisticaSemanaPassada(pais)),
+          
+        ])
       } else {
-        this.oQueGostariaSaber()
+        //O pais buscado não existe
+        await this.adicionarFala(`Não encontrei o país ${pais}.`, BotFaces.TRISTE)
+
+        //Mas existe pais com nome similar  
+        if (encontrouPais.similares.length > 0) {
+          await this.adicionarFala(`Talvez você esteja querendo dizer`, BotFaces.PENSANDO)
+
+          const opcoes = encontrouPais.similares.map(p => {
+            return new Opcao(p, () => this.buscarEstatisticaPais(p))
+          })
+          opcoes.push(new Opcao('Nenhum desses', () => this.oQueGostariaSaber()))
+
+          this.interagir('opcoes', opcoes, BotFaces.PENSANDO)
+        } else {
+          this.oQueGostariaSaber()
+        }
       }
+    } catch (erro) {
+      await this.adicionarFala(`Ops! Desculpe, ${this.nomeUsuario}, parece que minha rede de informações não está disponível no momento!`, BotFaces.ESPANTADO)
+      this.oQueGostariaSaber();
     }
     
   }
@@ -95,7 +103,10 @@ export abstract class EstatisticaModulo extends Chat {
     await this.adicionarFala(`Deseja saber de algum outro país?`)
     this.interagir('opcoes', [
       new Opcao('um país', () => this.perguntarPaisEstatistica()),
-      new Opcao('Não', () => this.oQueGostariaSaber())
+      new Opcao('Não', async () => {
+        await this.adicionarFala('Não', null, 'Você', false)
+        this.oQueGostariaSaber()
+      })
     ])
   }
 
