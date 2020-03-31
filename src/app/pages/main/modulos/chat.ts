@@ -27,7 +27,7 @@ export abstract class Chat  {
   constructor(protected usuarioService: UsuarioService, public estatService:EstatisticasService) {}
 
   /** Adiciona uma fala da aplicação */
-  protected async adicionarFala(fala: string, botFace:BotFaces=null, autor: string  = 'ROBO', robo:boolean = true) {
+  protected async adicionarFala(fala: string, botFace:BotFaces=null, autor: string  = 'BOT', robo:boolean = true) {
     
     if (botFace != null) this.botFace = botFace;
 
