@@ -3,30 +3,34 @@ import { Opcao } from 'src/app/models/opcao';
 import { InputTexto } from 'src/app/models/input-text';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { EstatisticasService } from 'src/app/services/estatisticas.service';
+import { BotFaces } from 'src/app/models/bot-faces';
 
 @Component({
   selector: 'app-main',
-  templateUrl: './main.page.html',
-  styleUrls: ['./main.page.scss'],
+  templateUrl: './../main.page.html',
+  styleUrls: ['./../main.page.scss'],
 })
 export abstract class Chat  {
 
   //Mensagens do Chat
   mensagens: {autor:string, fala: string, robo?:boolean}[] = []
+  botFace:BotFaces = BotFaces.NORMAL;
   //Interação com o Chat
   interacao: {ativa: boolean, tipo: 'texto'|'opcoes'} = {ativa: false, tipo: 'texto'};
   input: InputTexto = new InputTexto();
   opcoes: Opcao[] = [];
   debug = false;
   //Usuario
-  delay = 0;
+  delay = 10;
   nomeUsuario = null;
 
   constructor(protected usuarioService: UsuarioService, public estatService:EstatisticasService) {}
 
   /** Adiciona uma fala da aplicação */
-  protected async adicionarFala(fala: string, autor: string  = 'ROBO', robo:boolean = true) {
+  protected async adicionarFala(fala: string, botFace:BotFaces=null, autor: string  = 'ROBO', robo:boolean = true) {
     
+    if (botFace != null) this.botFace = botFace;
+
     this.interacao.ativa = false;
     //Adiciona fala
     this.mensagens.push({autor, fala:'', robo});
@@ -37,12 +41,14 @@ export abstract class Chat  {
     }
     
     //Remove mensagens antigas
-    if (this.mensagens.length > 10) this.mensagens.shift();
+    if (this.mensagens.length > 5) this.mensagens.shift();
     
   }
   
   /** Habilita a interação */
-  protected interagir(tipo: 'texto'|'opcoes', funcoes?: any) {
+  protected interagir(tipo: 'texto'|'opcoes', funcoes?: any, botFace = BotFaces.NORMAL) {
+    this.botFace = botFace;
+
     this.interacao.ativa = true;
     this.interacao.tipo = tipo;
     

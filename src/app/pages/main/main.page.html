@@ -1,13 +1,14 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>main</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
   <div id="main">
-    <div *ngFor="let msg of mensagens" [ngClass]="{'robo-msg': msg.robo, 'voce-msg':!msg.robo}">
-      <p><b>{{msg.autor}}:</b> {{msg.fala}}</p>
+
+    <div id="bot">
+      <ion-img src="assets/imgs/bot/{{botFace}}"></ion-img>
+    </div>
+
+    <div id="msgs">
+      <div *ngFor="let msg of mensagens" [ngClass]="{'robo-msg': msg.robo, 'voce-msg':!msg.robo}">
+        <p><b>{{msg.autor}}:</b> {{msg.fala}}</p>
+      </div>
     </div>
     
     <div id="input-texto" *ngIf="interacao.ativa && interacao.tipo == 'texto'" >

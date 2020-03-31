@@ -2,14 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { Chat } from './chat';
 import { Opcao } from 'src/app/models/opcao';
 import * as moment from 'moment';
+import { BotFaces } from 'src/app/models/bot-faces';
 
 export abstract class EstatisticaModulo extends Chat {
 
   //================================= ESTATISTICAS
   /** Informa os dados do Mundo e pergunta se quer saber de outro país */
   async estatistica() {
-    await this.adicionarFala(`Estátistica`, 'Você', false);
-    await this.adicionarFala(`Aguarde um pouco, estou buscando umas informações`);
+    await this.adicionarFala(`Estátistica`, null, 'Você', false);
+    await this.adicionarFala(`Aguarde um pouco, estou buscando umas informações`, BotFaces.PENSANDO);
     const dados = await this.estatService.buscarEstatisticaPais();
     console.log(dados);
     await this.adicionarFala(`No dia ${this.fData(dados.ultima_atualizacao)}, o mundo apresenta ${dados.confirmados} confirmados, ${dados.recuperados} recuperados e ${dados.mortes} mortes. Só no dia de hoje foram ${dados.confirmadosNovos} casos e ${dados.mortesNovas} mortes`)
@@ -23,7 +24,7 @@ export abstract class EstatisticaModulo extends Chat {
 
   /** Pergunta qual pais gostaria saber a estatistica **/
   async perguntarPaisEstatistica() {
-    await this.adicionarFala(`Gostaria de saber de outros países`, 'Você', false);
+    await this.adicionarFala(`Gostaria de saber de outros países`, null, 'Você', false);
     await this.adicionarFala(`Qual país você gostaria de saber?`);
     this.interagir('texto', () => { this.buscarEstatisticaPais() })
   }
@@ -34,8 +35,8 @@ export abstract class EstatisticaModulo extends Chat {
     //Se pais não foi informado por botão, recupera no texto
     if (!pais) pais = this.input.texto;
     
-    await this.adicionarFala(pais, 'Você', false);
-    await this.adicionarFala(`Aguarde um pouco, estou buscando as informações`);
+    await this.adicionarFala(pais, null, 'Você', false);
+    await this.adicionarFala(`Aguarde um pouco, estou buscando as informações`, BotFaces.PENSANDO);
 
     const encontrouPais = this.estatService.buscarPais(pais);
 
@@ -76,7 +77,7 @@ export abstract class EstatisticaModulo extends Chat {
 
   /** Busca dados do pais na semana passada */
   async estatisticaSemanaPassada(pais) {
-    await this.adicionarFala(`Como estava na semana passada?`, 'Você', false);
+    await this.adicionarFala(`Como estava na semana passada?`, null, 'Você', false);
     await this.adicionarFala(`Huuum... Deixe me ver`);
     
     //Busca uma semana atrás

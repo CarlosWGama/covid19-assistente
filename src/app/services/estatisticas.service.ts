@@ -17,10 +17,8 @@ export class EstatisticasService {
 
   //Retorna o pais pelo nome
   public async buscarEstatisticaPais(pais = 'All', dia = null) {
-
     const nomePais = (pais == 'All' ? pais : this.getNomePais(pais));
-    if (!nomePais)
-      return null;
+    if (!nomePais) return null;
 
     // const dia = moment().format('YYYY-MM-DD');
 
