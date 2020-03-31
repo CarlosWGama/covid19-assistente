@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import * as moment from 'moment';
-import { ResourceLoader } from '@angular/compiler';
-
+import * as nlp from './../helpers/nlp';
 @Injectable({
   providedIn: 'root'
 })
@@ -30,25 +29,45 @@ export class EstatisticasService {
             console.log(retorno);
             if (retorno.results == 0) 
               return null;
+            const r = retorno.response[0];
             const dados = {
-              'mortes': retorno.response[0].deaths.total,
-              'mortesNovas': retorno.response[0].deaths.new,
-              'confirmados': retorno.response[0].cases.total,
-              'confirmadosNovos': retorno.response[0].cases.new,
-              'recuperados': retorno.response[0].cases.recovered,
-              'ultima_atualizacao': dia
+              'mortes': (r.deaths.total ? r.deaths.total : 0),
+              'mortesNovas': (r.deaths.new ? r.deaths.new : 0),
+              'confirmados': (r.cases.total ? r.cases.total : 0),
+              'confirmadosNovos': (r.cases.new ? r.cases.new : 0),
+              'recuperados': (r.cases.recovered ? r.cases.recovered : 0),
+              'ultima_atualizacao': r.day
             }
             return dados;
           })
+  }
+
+  public buscarPais(pais): {achou: boolean, similares?:string[]} {
+    const index = paises.map(p => p.nomePT.toLowerCase()).indexOf(pais.toLowerCase().trim());
+    if (index != -1)
+      return {achou: true}
+    else {
+      const similares = this.buscarSimilares(pais);
+      return {achou: false, similares};
+    }
+  }
+
+  /** Busca paises com nomes similares */
+  public buscarSimilares(pais) {
+    let resultados = paises.map((p) => {
+      const similaridade = nlp.similar(p.nomePT.toLowerCase(), pais.toLowerCase().trim());
+      return (similaridade > 0.6 ? p.nomePT : null) 
+    })
+    return resultados.filter(p => p != null);
   }
 
   /**
    * Busca o nome do país 
    * @param pais 
    */
-  public getNomePais(pais): string|null {
+  private getNomePais(pais): string|null {
     console.log(pais);
-    const index = paises.map(p => p.nomePT.toLowerCase().trim()).indexOf(pais.toLowerCase());
+    const index = paises.map(p => p.nomePT.toLowerCase().trim()).indexOf(pais.toLowerCase().trim());
     console.log(index);
       return (index != -1 ? paises[index].nomeAPI : null);
   }

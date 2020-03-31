@@ -9,7 +9,7 @@ import { EstatisticasService } from 'src/app/services/estatisticas.service';
   templateUrl: './main.page.html',
   styleUrls: ['./main.page.scss'],
 })
-export class Chat  {
+export abstract class Chat  {
 
   //Mensagens do Chat
   mensagens: {autor:string, fala: string, robo?:boolean}[] = []
@@ -51,5 +51,8 @@ export class Chat  {
     else 
       this.opcoes = funcoes;    
   }
+
+  /** Pergunta Principal do que o usuário deseja fazer */
+  async abstract oQueGostariaSaber();
 
 }
