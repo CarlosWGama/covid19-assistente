@@ -11,15 +11,21 @@ export abstract class EstatisticaModulo extends Chat {
   async estatistica() {
     await this.adicionarFala(`Estátistica`, null, 'Você', false);
     await this.adicionarFala(`Aguarde um pouco, estou buscando umas informações`, BotFaces.PENSANDO);
-    const dados = await this.estatService.buscarEstatisticaPais();
-    console.log(dados);
-    await this.adicionarFala(`No dia ${this.fData(dados.ultima_atualizacao)}, o mundo apresenta ${dados.confirmados} confirmados, ${dados.recuperados} recuperados e ${dados.mortes} mortes. Só no dia de hoje foram ${dados.confirmadosNovos} casos e ${dados.mortesNovas} mortes`)
-    await this.adicionarFala(`Deseja saber mais alguma estatística?`)
-    this.interagir('opcoes', [
-      new Opcao('De um país', () => this.perguntarPaisEstatistica()),
-      new Opcao('De uma semana atrás', () => this.estatisticaSemanaPassada('All')),
-      new Opcao('Não', () => this.oQueGostariaSaber())
-    ])
+    
+    try {
+      const dados = await this.estatService.buscarEstatisticaPais();
+      
+      await this.adicionarFala(`No dia ${this.fData(dados.ultima_atualizacao)}, o mundo apresenta ${dados.confirmados} confirmados, ${dados.recuperados} recuperados e ${dados.mortes} mortes. Só nesse dia foram ${dados.confirmadosNovos} casos e ${dados.mortesNovas} mortes`)
+      await this.adicionarFala(`Deseja saber mais alguma estatística?`)
+      this.interagir('opcoes', [
+        new Opcao('De um país', () => this.perguntarPaisEstatistica()),
+        new Opcao('De uma semana atrás', () => this.estatisticaSemanaPassada('All')),
+        new Opcao('Não', () => this.oQueGostariaSaber())
+      ])
+    } catch (erro) {
+      await this.adicionarFala(`Ops! Parece que minha rede de informações não está disponível no momento!`, BotFaces.ESPANTADO)
+      this.oQueGostariaSaber();
+    }
   }
 
   /** Pergunta qual pais gostaria saber a estatistica **/
@@ -46,7 +52,7 @@ export abstract class EstatisticaModulo extends Chat {
       if (dados) //Encontrou dados do país
         await this.adicionarFala(`Em ${pais}, no último dado coletado (${this.fData(dados.ultima_atualizacao)}), temos ${dados.confirmados} (${dados.confirmadosNovos}) confirmados, ${dados.recuperados} recuperados e ${dados.mortes} (${dados.mortesNovas}) mortes`)
       else
-        await this.adicionarFala(`Não encontrei dados de ${pais}`)
+        await this.adicionarFala(`Não encontrei dados de ${pais}`, BotFaces.TRISTE)
     
       await this.adicionarFala(`Deseja saber mais dados estatísticos?`)
       this.interagir('opcoes', [
@@ -56,18 +62,18 @@ export abstract class EstatisticaModulo extends Chat {
       ])
     } else {
       //O pais buscado não existe
-      await this.adicionarFala(`Não encontrei o país ${pais}.`)
+      await this.adicionarFala(`Não encontrei o país ${pais}.`, BotFaces.TRISTE)
 
       //Mas existe pais com nome similar  
       if (encontrouPais.similares.length > 0) {
-        await this.adicionarFala(`Talvez você esteja querendo dizer`)
+        await this.adicionarFala(`Talvez você esteja querendo dizer`, BotFaces.PENSANDO)
 
         const opcoes = encontrouPais.similares.map(p => {
           return new Opcao(p, () => this.buscarEstatisticaPais(p))
         })
         opcoes.push(new Opcao('Nenhum desses', () => this.oQueGostariaSaber()))
 
-        this.interagir('opcoes', opcoes)
+        this.interagir('opcoes', opcoes, BotFaces.PENSANDO)
       } else {
         this.oQueGostariaSaber()
       }
@@ -78,7 +84,7 @@ export abstract class EstatisticaModulo extends Chat {
   /** Busca dados do pais na semana passada */
   async estatisticaSemanaPassada(pais) {
     await this.adicionarFala(`Como estava na semana passada?`, null, 'Você', false);
-    await this.adicionarFala(`Huuum... Deixe me ver`);
+    await this.adicionarFala(`Huuum... Deixe me ver`, BotFaces.PENSANDO);
     
     //Busca uma semana atrás
     let dia = moment().subtract(1, 'weeks').format('YYYY-MM-DD');

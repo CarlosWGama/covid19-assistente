@@ -57,7 +57,7 @@ export class MainPage extends EstatisticaModulo implements OnInit {
   }
 
   async recursoAindaNaoDisponivel() {
-    await this.adicionarFala('Ooops! Ainda não estou com essa função', BotFaces.ESPANTADO);
+    await this.adicionarFala('Ooops! Ainda não estou com essa função', BotFaces.TRISTE);
     this.oQueGostariaSaber();
   }
 }
