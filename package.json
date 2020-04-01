@@ -1,8 +1,8 @@
 {
-  "name": "covid",
-  "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "https://ionicframework.com/",
+  "name": "bot-cc1",
+  "version": "1.0.1",
+  "author": "Carlos W. Gama",
+  "homepage": "https://carloswgama.com.br/",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

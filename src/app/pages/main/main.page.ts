@@ -10,7 +10,7 @@ import { Covid19Modulo } from './modulos/covid19';
 })
 export class MainPage extends Covid19Modulo implements OnInit {
 
-  readonly VERSAO = '1.0.0';
+  readonly VERSAO = '1.0.1';
 
   async ngOnInit() {
     this.nomeUsuario = await this.usuarioService.getUsuario();
