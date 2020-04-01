@@ -10,7 +10,7 @@ import { BotFaces } from 'src/app/models/bot-faces';
   templateUrl: './../main.page.html',
   styleUrls: ['./../main.page.scss'],
 })
-export abstract class Chat  {
+export class Chat  {
 
   //Mensagens do Chat
   mensagens: {autor:string, fala: string, robo?:boolean}[] = []
@@ -62,6 +62,6 @@ export abstract class Chat  {
   }
 
   /** Pergunta Principal do que o usuário deseja fazer */
-  async abstract oQueGostariaSaber();
+  async oQueGostariaSaber() {}
 
 }

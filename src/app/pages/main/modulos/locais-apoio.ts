@@ -1,9 +1,8 @@
 import { Opcao } from 'src/app/models/opcao';
-import * as moment from 'moment';
 import { BotFaces } from 'src/app/models/bot-faces';
 import { EstatisticaModulo } from './estatistica';
 
-export abstract class LocaisApoioModulo extends EstatisticaModulo {
+export class LocaisApoioModulo extends EstatisticaModulo {
 
   //================================= ESTATISTICAS
   async locaisApoio() {

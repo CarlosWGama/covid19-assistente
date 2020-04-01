@@ -7,6 +7,11 @@ import { IonicModule } from '@ionic/angular';
 import { MainPageRoutingModule } from './main-routing.module';
 
 import { MainPage } from './main.page';
+import { Chat } from './modulos/chat';
+import { Covid19Modulo } from './modulos/covid19';
+import { EstatisticaModulo } from './modulos/estatistica';
+import { LocaisApoioModulo } from './modulos/locais-apoio';
+import { SintomasModulo } from './modulos/sintomas';
 
 @NgModule({
   imports: [
@@ -15,6 +20,6 @@ import { MainPage } from './main.page';
     IonicModule,
     MainPageRoutingModule
   ],
-  declarations: [MainPage]
+  declarations: [MainPage, Chat, Covid19Modulo, EstatisticaModulo, LocaisApoioModulo, SintomasModulo]
 })
 export class MainPageModule {}

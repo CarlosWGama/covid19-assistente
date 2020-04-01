@@ -1,0 +1,6 @@
+keytool -genkey -v -keystore covid19.keystore -alias cesmac -keyalg RSA -keysize 2048 -validity 10000
+
+
+jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore covid19.keystore platforms\android\app\build\outputs\apk\release\app-release-unsigned.apk cesmac
+
+D:\AndroidSDK\build-tools\29.0.2\zipalign -v 4 platforms\android\app\build\outputs\apk\release\app-release-unsigned.apk platforms\android\app\build\outputs\apk\release\covid19.0.0.1.apk

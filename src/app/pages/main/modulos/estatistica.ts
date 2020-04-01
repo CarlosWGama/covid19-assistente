@@ -4,7 +4,7 @@ import { Opcao } from 'src/app/models/opcao';
 import * as moment from 'moment';
 import { BotFaces } from 'src/app/models/bot-faces';
 
-export abstract class EstatisticaModulo extends Chat {
+export class EstatisticaModulo extends Chat {
 
   //================================= ESTATISTICAS
   /** Informa os dados do Mundo e pergunta se quer saber de outro país */

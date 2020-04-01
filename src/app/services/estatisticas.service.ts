@@ -421,7 +421,7 @@ const paises = [
   { "gentilico" : "norte-americana",
     "nomePT" : "Estados Unidos",
     // "nomeAPI" : "United States",
-    "nomeAPI" : "US",
+    "nomeAPI" : "USA",
     "sigla" : "US"
   },
   { "gentilico" : "estoniana",

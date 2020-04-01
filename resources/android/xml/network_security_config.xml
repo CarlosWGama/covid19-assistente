@@ -2,6 +2,7 @@
 <network-security-config>
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">localhost</domain>
+        <domain includeSubdomains="true">covid-193.p.rapidapi.com</domain>
         <domain includeSubdomains="true">*</domain>
     </domain-config>
 </network-security-config>
