@@ -14,10 +14,13 @@ export class MainPage extends Covid19Modulo implements OnInit {
 
   async ngOnInit() {
     this.nomeUsuario = await this.usuarioService.getUsuario();
+
+    //Primeiro acesso
     if (!this.nomeUsuario) {
       await this.adicionarFala('Olá meu nome é Bot-Covid-Camsec-01, mas pode me chamar de Bot-CC1 mesmo! Sou um assistente virtual que o ajudará a tirar algumas dúvidas sobre o COVID-19. Primeiro, deixe-me saber qual é o seu nome!', BotFaces.FELIZ);
       this.interagir('texto', () => this.apresentar(), BotFaces.TRANQUILO);
     } else {
+      //Usuário voltando a acessar
       await this.adicionarFala(`Olá ${this.nomeUsuario}! Fico feliz que tenha voltado.`, BotFaces.FELIZ);
       this.interagir('opcoes', [
         new Opcao(`Gostaria de algumas informações`, async () => {
@@ -26,7 +29,6 @@ export class MainPage extends Covid19Modulo implements OnInit {
         }),
         new Opcao(`Não sou ${this.nomeUsuario}`, () => this.alterarNome()),
       ]);
-      //this.oQueGostariaSaber();
     }
 
   }
@@ -55,7 +57,7 @@ export class MainPage extends Covid19Modulo implements OnInit {
     await this.adicionarFala(`O que você gostaria de saber agora?`);
     this.interagir('opcoes', [
       new Opcao('O que é COVID-19?', () => this.oQueECovid19()),
-      new Opcao('Sintomas', () => this.recursoAindaNaoDisponivel()),
+      new Opcao('Sintomas', () => this.sintomas()),
       new Opcao('Estatistica', () => this.estatistica()),
       new Opcao('Locais de apoio', () => this.locaisApoio()),
       new Opcao('Quem é você?', () => this.creditos()),
@@ -67,6 +69,7 @@ export class MainPage extends Covid19Modulo implements OnInit {
     this.oQueGostariaSaber();
   }
 
+  /** Define os creditos do aplicativo */
   async creditos() {
     await this.adicionarFala('Fale-me um pouco sobre você!', null, 'Você', false);
     await this.adicionarFala(`Oh, fico feliz que você queira saber sobre mim! Bom, eu sou o Bot-Covid-Camsec-01 e estou na versão ${this.VERSAO}. Fui criado por Carlos do Núcleo de Robótica e IA do CESMAC em parceria com curso de Medicina e Mestrado Profissional de Pesquisa em Saúde. A minha produção teve o apoio da Drª. Mylana Gama`, BotFaces.FELIZ);

@@ -11,9 +11,9 @@
       </div>
     </div>
     
-    <div id="input-texto" *ngIf="interacao.ativa && interacao.tipo == 'texto'" >
+    <div id="input-texto" *ngIf="interacao.ativa && interacao.tipo == 'aberta'" >
       <ion-item>
-        <ion-textarea placeholder="Sua resposta" autoGrow [(ngModel)]="input.texto"></ion-textarea>
+        <ion-input placeholder="Sua resposta" [type]="inputType" [(ngModel)]="input.texto"></ion-input>
         <ion-button (click)="input.funcao()" fill="clear" [disabled]="!input.texto">
           <ion-icon slot="start" name="send" size="large"></ion-icon>
         </ion-button>

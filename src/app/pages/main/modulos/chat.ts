@@ -16,7 +16,8 @@ export abstract class Chat  {
   mensagens: {autor:string, fala: string, robo?:boolean}[] = []
   botFace:BotFaces = BotFaces.NORMAL;
   //Interação com o Chat
-  interacao: {ativa: boolean, tipo: 'texto'|'opcoes'} = {ativa: false, tipo: 'texto'};
+  interacao: {ativa: boolean, tipo: 'aberta'|'opcoes'} = {ativa: false, tipo: 'aberta'};
+  inputType:'text'|'number' = 'text';
   input: InputTexto = new InputTexto();
   opcoes: Opcao[] = [];
   debug = false;
@@ -46,13 +47,15 @@ export abstract class Chat  {
   }
   
   /** Habilita a interação */
-  protected interagir(tipo: 'texto'|'opcoes', funcoes?: any, botFace = BotFaces.NORMAL) {
-    this.botFace = botFace;
+  protected interagir(tipo: 'texto'|'numerico'|'opcoes', funcoes?: any, botFace = BotFaces.NORMAL) {
+    this.botFace = botFace; 
+    this.inputType = (tipo == 'numerico' ? 'number' : 'text');
+
 
     this.interacao.ativa = true;
-    this.interacao.tipo = tipo;
+    this.interacao.tipo = (tipo == 'opcoes' ? 'opcoes' : 'aberta');
     
-    if (this.interacao.tipo == 'texto')
+    if (this.interacao.tipo == 'aberta')
       this.input = new InputTexto(funcoes)
     else 
       this.opcoes = funcoes;    
