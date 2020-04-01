@@ -62,7 +62,10 @@ export class EstatisticaModulo extends Chat {
         this.interagir('opcoes', [
           new Opcao('De um país', () => this.perguntarPaisEstatistica()),
           new Opcao('De uma semana atrás', () => this.estatisticaSemanaPassada(pais)),
-          
+          new Opcao('Não', async () => {
+            await this.adicionarFala(`Não, obrigado`, null, 'Você', false);
+            this.oQueGostariaSaber()
+          }),
         ])
       } else {
         //O pais buscado não existe
@@ -75,7 +78,11 @@ export class EstatisticaModulo extends Chat {
           const opcoes = encontrouPais.similares.map(p => {
             return new Opcao(p, () => this.buscarEstatisticaPais(p))
           })
-          opcoes.push(new Opcao('Nenhum desses', () => this.oQueGostariaSaber()))
+          opcoes.push(new Opcao('Outro país', () => this.perguntarPaisEstatistica()))
+          opcoes.push(new Opcao('Desistir', async () => {
+            await this.adicionarFala(`Na realidade, não quero nenhum país`, null, 'Você', false);
+            this.oQueGostariaSaber()}
+          ))
 
           this.interagir('opcoes', opcoes, BotFaces.PENSANDO)
         } else {
@@ -104,7 +111,7 @@ export class EstatisticaModulo extends Chat {
     this.interagir('opcoes', [
       new Opcao('um país', () => this.perguntarPaisEstatistica()),
       new Opcao('Não', async () => {
-        await this.adicionarFala('Não', null, 'Você', false)
+        await this.adicionarFala('Não, obrigado', null, 'Você', false)
         this.oQueGostariaSaber()
       })
     ])

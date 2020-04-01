@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import * as moment from 'moment';
 import * as nlp from './../helpers/nlp';
 @Injectable({
   providedIn: 'root'
@@ -19,8 +18,6 @@ export class EstatisticasService {
   public async buscarEstatisticaPais(pais = 'All', dia = null) {
     const nomePais = (pais == 'All' ? pais : this.getNomePais(pais));
     if (!nomePais) return null;
-
-    // const dia = moment().format('YYYY-MM-DD');
 
     return this.http.get('https://covid-193.p.rapidapi.com/history?country='+nomePais+(dia ? '&day='+dia : ''), this.headers)
           .toPromise().then((retorno:any) => {
@@ -420,6 +417,12 @@ const paises = [
   },
   { "gentilico" : "norte-americana",
     "nomePT" : "Estados Unidos",
+    // "nomeAPI" : "United States",
+    "nomeAPI" : "USA",
+    "sigla" : "US"
+  },
+  { "gentilico" : "norte-americana",
+    "nomePT" : "EUA",
     // "nomeAPI" : "United States",
     "nomeAPI" : "USA",
     "sigla" : "US"

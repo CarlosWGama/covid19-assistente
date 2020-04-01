@@ -58,7 +58,7 @@ export class MainPage extends Covid19Modulo implements OnInit {
     this.interagir('opcoes', [
       new Opcao('O que é COVID-19?', () => this.oQueECovid19()),
       new Opcao('Sintomas', () => this.sintomas()),
-      new Opcao('Estatistica', () => this.estatistica()),
+      new Opcao('Estatística', () => this.estatistica()),
       new Opcao('Locais de apoio', () => this.locaisApoio()),
       new Opcao('Quem é você?', () => this.creditos()),
     ], face)
@@ -72,8 +72,8 @@ export class MainPage extends Covid19Modulo implements OnInit {
   /** Define os creditos do aplicativo */
   async creditos() {
     await this.adicionarFala('Fale-me um pouco sobre você!', null, 'Você', false);
-    await this.adicionarFala(`Oh, fico feliz que você queira saber sobre mim! Bom, eu sou o Bot-Covid-Camsec-01 e estou na versão ${this.VERSAO}. Fui criado por Carlos do Núcleo de Robótica e IA do CESMAC em parceria com curso de Medicina e Mestrado Profissional de Pesquisa em Saúde.`, BotFaces.FELIZ);
-    await this.adicionarFala('A composição da minha base de dados estatistíca é retirada de api-sports.io e minha aparência de getavataaars.com', BotFaces.FELIZ);
+    await this.adicionarFala(`Oh, fico feliz que você queira saber sobre mim! Bom, eu sou o Bot-Covid-Camsec-01 e estou na versão ${this.VERSAO}. Fui criado por Carlos junto ao Núcleo de Robótica e IA do CESMAC e em parceria com curso de Medicina e o Mestrado Profissional de Pesquisa em Saúde da instituição.`, BotFaces.FELIZ);
+    await this.adicionarFala('A composição da minha base de dados das estatistícas é retirada de api-sports.io e minha aparência foi criada através de getavataaars.com', BotFaces.FELIZ);
     this.oQueGostariaSaber(BotFaces.FELIZ);
   } 
 }
