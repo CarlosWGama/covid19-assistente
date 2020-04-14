@@ -20,6 +20,6 @@ import { SintomasModulo } from './modulos/sintomas';
     IonicModule,
     MainPageRoutingModule
   ],
-  declarations: [MainPage, Chat, Covid19Modulo, EstatisticaModulo, LocaisApoioModulo, SintomasModulo]
+  declarations: [MainPage]
 })
 export class MainPageModule {}

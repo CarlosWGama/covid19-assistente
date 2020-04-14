@@ -22,6 +22,11 @@
     height: calc(100% - 210px);
 }
 
+#panico {
+    position: absolute;
+    right: 10px;
+}
+
 .robo-msg {
     // background-image: linear-gradient(to right, #43e97b 0%, #38f9d7 100%);
     background: rgb(0, 105, 173);

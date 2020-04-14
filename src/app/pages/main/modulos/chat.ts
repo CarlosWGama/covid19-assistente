@@ -1,16 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Injectable } from '@angular/core';
 import { Opcao } from 'src/app/models/opcao';
 import { InputTexto } from 'src/app/models/input-text';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { EstatisticasService } from 'src/app/services/estatisticas.service';
 import { BotFaces } from 'src/app/models/bot-faces';
 
-@Component({
-  selector: 'app-main',
-  templateUrl: './../main.page.html',
-  styleUrls: ['./../main.page.scss'],
-})
-export class Chat  {
+@Injectable()
+export abstract class Chat  {
 
   //Mensagens do Chat
   mensagens: {autor:string, fala: string, robo?:boolean}[] = []
@@ -24,6 +20,8 @@ export class Chat  {
   //Usuario
   delay = 20;
   nomeUsuario = null;
+  contato = null;
+  botaoPanico: boolean = false;
 
   constructor(protected usuarioService: UsuarioService, public estatService:EstatisticasService) {}
 
@@ -62,6 +60,6 @@ export class Chat  {
   }
 
   /** Pergunta Principal do que o usuário deseja fazer */
-  async oQueGostariaSaber() {}
+  async abstract oQueGostariaSaber()
 
 }

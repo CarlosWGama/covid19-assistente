@@ -2,7 +2,7 @@ import { BotFaces } from 'src/app/models/bot-faces';
 import { LocaisApoioModulo } from './locais-apoio';
 import { Opcao } from 'src/app/models/opcao';
 
-export class SintomasModulo extends LocaisApoioModulo {
+export abstract class SintomasModulo extends LocaisApoioModulo {
 
     private analiseSintomas = {
         tosse: false,

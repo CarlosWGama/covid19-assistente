@@ -2,7 +2,7 @@ import { Opcao } from 'src/app/models/opcao';
 import { BotFaces } from 'src/app/models/bot-faces';
 import { EstatisticaModulo } from './estatistica';
 
-export class LocaisApoioModulo extends EstatisticaModulo {
+export abstract class LocaisApoioModulo extends EstatisticaModulo {
 
   //================================= ESTATISTICAS
   async locaisApoio() {

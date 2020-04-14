@@ -5,6 +5,12 @@
       <ion-img src="assets/imgs/bot/{{botFace}}"></ion-img>
     </div>
 
+    <div id="panico" *ngIf="botaoPanico">
+      <ion-button (click)="panico()" expand="block" size="large" color="danger" shape="round">
+        PÂNICO
+      </ion-button>
+    </div>
+
     <div id="msgs">
       <div *ngFor="let msg of mensagens" [ngClass]="{'robo-msg': msg.robo, 'voce-msg':!msg.robo}">
         <p><b>{{msg.autor}}:</b> {{msg.fala}}</p>

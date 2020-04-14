@@ -11,6 +11,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { IonicStorageModule } from '@ionic/storage';
 import { HttpClientModule } from '@angular/common/http';
 import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { SMS } from '@ionic-native/sms/ngx';
 
 
 @NgModule({
@@ -21,6 +23,8 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
     StatusBar,
     SplashScreen,
     ScreenOrientation,
+    SMS,
+    Geolocation,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

@@ -10,10 +10,11 @@ import { Covid19Modulo } from './modulos/covid19';
 })
 export class MainPage extends Covid19Modulo implements OnInit {
 
-  readonly VERSAO = '1.0.1';
+  readonly VERSAO = '1.1.0';
 
   async ngOnInit() {
     this.nomeUsuario = await this.usuarioService.getUsuario();
+    this.contato = await this.usuarioService.getContato();
 
     //Primeiro acesso
     if (!this.nomeUsuario) {
@@ -21,6 +22,7 @@ export class MainPage extends Covid19Modulo implements OnInit {
       this.interagir('texto', () => this.apresentar(), BotFaces.TRANQUILO);
     } else {
       //Usuário voltando a acessar
+      this.botaoPanico = true;
       await this.adicionarFala(`Olá ${this.nomeUsuario}! Fico feliz que tenha voltado.`, BotFaces.FELIZ);
       this.interagir('opcoes', [
         new Opcao(`Gostaria de algumas informações`, async () => {
@@ -42,13 +44,18 @@ export class MainPage extends Covid19Modulo implements OnInit {
     this.usuarioService.setUsuario(this.nomeUsuario);
     await this.adicionarFala(this.nomeUsuario, null, 'Você', false);
     await this.adicionarFala(`Olá, ${this.nomeUsuario}.`);
-    this.oQueGostariaSaber();
+    this.semcontato();
   }
 
   /** Altera o nome do usuário */
   async alterarNome() {
     await this.adicionarFala(`Ahh, você não é ${this.nomeUsuario}? Peço minhas desculpas!`, BotFaces.ESPANTADO);
     await this.adicionarFala('Como posso chamá-lo então?', BotFaces.TRANQUILO);
+    
+    this.nomeUsuario = null;
+    this.contato = null;
+    this.usuarioService.reset();
+
     this.interagir('texto', () => this.apresentar(), BotFaces.TRANQUILO);
   }
 
@@ -72,7 +79,7 @@ export class MainPage extends Covid19Modulo implements OnInit {
   /** Define os creditos do aplicativo */
   async creditos() {
     await this.adicionarFala('Fale-me um pouco sobre você!', null, 'Você', false);
-    await this.adicionarFala(`Oh, fico feliz que você queira saber sobre mim! Bom, eu sou o Bot-Covid-Camsec-01 e estou na versão ${this.VERSAO}. Fui criado por Carlos junto ao Núcleo de Robótica e IA do CESMAC e em parceria com curso de Medicina e o Mestrado Profissional de Pesquisa em Saúde da instituição.`, BotFaces.FELIZ);
+    await this.adicionarFala(`Oh, fico feliz que você queira saber sobre mim! Bom, eu sou o Bot-Covid-Camsec-01 e estou na versão ${this.VERSAO}. Fui criado por Carlos W. Gama junto ao Núcleo de Robótica e IA do CESMAC, Alessandra Pontes e em parceria com curso de Medicina e o Mestrado Profissional de Pesquisa em Saúde da instituição.`, BotFaces.FELIZ);
     await this.adicionarFala('A composição da minha base de dados das estatistícas é retirada de api-sports.io e minha aparência foi criada através de getavataaars.com', BotFaces.FELIZ);
     this.oQueGostariaSaber(BotFaces.FELIZ);
   } 

@@ -1,8 +1,8 @@
 import { BotFaces } from 'src/app/models/bot-faces';
-import { SintomasModulo } from './sintomas';
 import { Opcao } from 'src/app/models/opcao';
+import { PanicoModulo } from './panico';
 
-export class Covid19Modulo extends SintomasModulo {
+export abstract class Covid19Modulo extends PanicoModulo {
 
   //================================= ESTATISTICAS
     async oQueECovid19() {
