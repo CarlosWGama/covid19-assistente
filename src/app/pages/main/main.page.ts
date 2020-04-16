@@ -44,7 +44,8 @@ export class MainPage extends Covid19Modulo implements OnInit {
     this.usuarioService.setUsuario(this.nomeUsuario);
     await this.adicionarFala(this.nomeUsuario, null, 'Você', false);
     await this.adicionarFala(`Olá, ${this.nomeUsuario}.`);
-    this.semcontato();
+    if (!this.browser) this.semcontato();
+    else this.oQueGostariaSaber();
   }
 
   /** Altera o nome do usuário */
@@ -79,7 +80,7 @@ export class MainPage extends Covid19Modulo implements OnInit {
   /** Define os creditos do aplicativo */
   async creditos() {
     await this.adicionarFala('Fale-me um pouco sobre você!', null, 'Você', false);
-    await this.adicionarFala(`Oh, fico feliz que você queira saber sobre mim! Bom, eu sou o Bot-Covid-Camsec-01 e estou na versão ${this.VERSAO}. Fui criado por Carlos W. Gama junto ao Núcleo de Robótica e IA do CESMAC, Alessandra Pontes e em parceria com curso de Medicina e o Mestrado Profissional de Pesquisa em Saúde da instituição.`, BotFaces.FELIZ);
+    await this.adicionarFala(`Oh, fico feliz que você queira saber sobre mim! Bom, eu sou o Bot-Covid-Camsec-01 e estou na versão ${this.VERSAO}. Fui criado por Carlos L. Filho do Núcleo de Inteligência Artificial, Mozart Melo do Núcleo de Robótica e Alessandra Pontes do Núcleo de Inovação do Centro Universitário CESMAC, e em parceria com curso de Medicina e o Mestrado Profissional de Pesquisa em Saúde da instituição.`, BotFaces.FELIZ);
     await this.adicionarFala('A composição da minha base de dados das estatistícas é retirada de api-sports.io e minha aparência foi criada através de getavataaars.com', BotFaces.FELIZ);
     this.oQueGostariaSaber(BotFaces.FELIZ);
   } 

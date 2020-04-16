@@ -4,6 +4,7 @@ import { InputTexto } from 'src/app/models/input-text';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { EstatisticasService } from 'src/app/services/estatisticas.service';
 import { BotFaces } from 'src/app/models/bot-faces';
+import { Platform } from '@ionic/angular';
 
 @Injectable()
 export abstract class Chat  {
@@ -22,8 +23,11 @@ export abstract class Chat  {
   nomeUsuario = null;
   contato = null;
   botaoPanico: boolean = false;
+  browser: boolean = false;
 
-  constructor(protected usuarioService: UsuarioService, public estatService:EstatisticasService) {}
+  constructor(protected usuarioService: UsuarioService, public estatService:EstatisticasService, private platform: Platform) {
+    this.browser = (document.URL.startsWith('http://covid'));
+  }
 
   /** Adiciona uma fala da aplicação */
   protected async adicionarFala(fala: string, botFace:BotFaces=null, autor: string  = 'Bot-CC1', robo:boolean = true) {

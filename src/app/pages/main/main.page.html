@@ -5,7 +5,7 @@
       <ion-img src="assets/imgs/bot/{{botFace}}"></ion-img>
     </div>
 
-    <div id="panico" *ngIf="botaoPanico">
+    <div id="panico" *ngIf="botaoPanico && !browser">
       <ion-button (click)="panico()" expand="block" size="large" color="danger" shape="round">
         PÂNICO
       </ion-button>
